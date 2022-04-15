@@ -1,6 +1,6 @@
 package sys.paymentbilling.model;
 
-public class User {
+public class PayRegister {
 
 	private int id;
 	private String username;

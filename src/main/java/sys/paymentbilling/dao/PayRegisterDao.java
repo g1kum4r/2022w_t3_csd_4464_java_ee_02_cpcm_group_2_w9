@@ -8,23 +8,23 @@ import sys.paymentbilling.Constants;
 import sys.paymentbilling.exception.IncorrectUsernameOrPassword;
 import sys.paymentbilling.jdbc.JdbcUtil;
 import sys.paymentbilling.mapper.RowMapper;
-import sys.paymentbilling.model.User;
+import sys.paymentbilling.model.PayRegister;
 
-public class UserDao {
+public class PayRegisterDao {
 	
-	private RowMapper<User> userRowMapper = rs -> {
+	private RowMapper<PayRegister> userRowMapper = rs -> {
 		try {
 			if(rs.next()) {
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setUsername(rs.getString("user_name"));
-				user.setPassword(rs.getString("user_pwd"));
-				user.setBranch(rs.getString("branch"));
-				user.setRole(rs.getString("role"));
-				user.setDateOfJoining(rs.getString("date_of_joining"));
-				user.setDateOfBirth(rs.getString("date_of_birth"));
-				user.setSalary(rs.getString("salary"));
-				return user;					
+				PayRegister payRegister = new PayRegister();
+				payRegister.setId(rs.getInt("id"));
+				payRegister.setUsername(rs.getString("user_name"));
+				payRegister.setPassword(rs.getString("user_pwd"));
+				payRegister.setBranch(rs.getString("branch"));
+				payRegister.setRole(rs.getString("role"));
+				payRegister.setDateOfJoining(rs.getString("date_of_joining"));
+				payRegister.setDateOfBirth(rs.getString("date_of_birth"));
+				payRegister.setSalary(rs.getString("salary"));
+				return payRegister;					
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -33,20 +33,20 @@ public class UserDao {
 		return null;
 	};
 
-	private RowMapper<List<User>> usersRowMapper = rs -> {
-		List<User> users = new ArrayList<>();
+	private RowMapper<List<PayRegister>> usersRowMapper = rs -> {
+		List<PayRegister> users = new ArrayList<>();
 		try {
 			while(rs.next()) {
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setUsername(rs.getString("user_name"));
-				user.setPassword(rs.getString("user_pwd"));
-				user.setBranch(rs.getString("branch"));
-				user.setRole(rs.getString("role"));
-				user.setDateOfJoining(rs.getString("date_of_joining"));
-				user.setDateOfBirth(rs.getString("date_of_birth"));
-				user.setSalary(rs.getString("salary"));
-				users.add(user);
+				PayRegister payRegister = new PayRegister();
+				payRegister.setId(rs.getInt("id"));
+				payRegister.setUsername(rs.getString("user_name"));
+				payRegister.setPassword(rs.getString("user_pwd"));
+				payRegister.setBranch(rs.getString("branch"));
+				payRegister.setRole(rs.getString("role"));
+				payRegister.setDateOfJoining(rs.getString("date_of_joining"));
+				payRegister.setDateOfBirth(rs.getString("date_of_birth"));
+				payRegister.setSalary(rs.getString("salary"));
+				users.add(payRegister);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -56,33 +56,33 @@ public class UserDao {
 	};
 
 
-	public User login(String username, String password, String role)
+	public PayRegister login(String username, String password, String role)
 			throws ClassNotFoundException, SQLException, IncorrectUsernameOrPassword {
-		User user = JdbcUtil.execute("select * from pay_register u" + " where u.user_name = ? and u.user_pwd = ? and u.role = ?",
+		PayRegister payRegister = JdbcUtil.execute("select * from pay_register u" + " where u.user_name = ? and u.user_pwd = ? and u.role = ?",
 				userRowMapper, username, password, role);
-		if (user == null) {
+		if (payRegister == null) {
 			throw new IncorrectUsernameOrPassword();
 		}
-		return user;
+		return payRegister;
 	}
 	
-	public User login(String username, String password)
+	public PayRegister login(String username, String password)
 			throws ClassNotFoundException, SQLException, IncorrectUsernameOrPassword {
-		User user = JdbcUtil.execute("select * from pay_register u" + " where u.user_name = ? and u.user_pwd = ? and u.role != 'ADMIN'",
+		PayRegister payRegister = JdbcUtil.execute("select * from pay_register u" + " where u.user_name = ? and u.user_pwd = ? and u.role != 'ADMIN'",
 				userRowMapper, username, password);
-		if (user == null) {
+		if (payRegister == null) {
 			throw new IncorrectUsernameOrPassword();
 		}
-		return user;
+		return payRegister;
 	}
 
-	public User loginAsAdmin(String username, String password)
+	public PayRegister loginAsAdmin(String username, String password)
 			throws ClassNotFoundException, SQLException, IncorrectUsernameOrPassword {
 		
 		return login(username, password, Constants.ROLE_ADMIN);
 	}
 
-	public void createAccountant(User user) throws ClassNotFoundException, SQLException {
+	public void createAccountant(PayRegister user) throws ClassNotFoundException, SQLException {
 		user.setRole(Constants.ROLE_ACCOUNTANT);
 		int id = JdbcUtil.insert("insert into pay_register"
 				+ "(user_name, user_pwd, role, branch, date_of_joining, date_of_birth, salary)"
@@ -91,7 +91,7 @@ public class UserDao {
 		user.setId(id);
 	}
 	
-	public void updateAccountant(int id, User user) throws ClassNotFoundException, SQLException {
+	public void updateAccountant(int id, PayRegister user) throws ClassNotFoundException, SQLException {
 		user.setRole(Constants.ROLE_ACCOUNTANT);
 		JdbcUtil.insert("update pay_register set user_pwd = ?, branch = ?, date_of_joining = ?, date_of_birth = ?, salary = ? "
 				+ "where id = ? ", 
@@ -99,19 +99,19 @@ public class UserDao {
 		user.setId(id);
 	}
 
-	public User getAccountant(int id) throws ClassNotFoundException, SQLException {
+	public PayRegister getAccountant(int id) throws ClassNotFoundException, SQLException {
 		return JdbcUtil.execute("select * from pay_register u where u.role = 'ACCOUNTANT' and u.id = ?", userRowMapper, id);
 	}
 
-	public List<User> getAccountants() throws ClassNotFoundException, SQLException {
+	public List<PayRegister> getAccountants() throws ClassNotFoundException, SQLException {
 		return JdbcUtil.execute("select * from pay_register u where u.role = 'ACCOUNTANT'", usersRowMapper);
 	}
 	
-	public List<User> searcAccountants(String branch) throws ClassNotFoundException, SQLException {
+	public List<PayRegister> searcAccountants(String branch) throws ClassNotFoundException, SQLException {
 		return JdbcUtil.execute("select * from pay_register u where u.role = 'ACCOUNTANT' and u.branch = ?", usersRowMapper, branch);
 	}
 	
-	public List<User> searcAccountants(String searchQuery, String branch) throws ClassNotFoundException, SQLException {
+	public List<PayRegister> searcAccountants(String searchQuery, String branch) throws ClassNotFoundException, SQLException {
 		return JdbcUtil.execute("select * from pay_register u where u.role = 'ACCOUNTANT' and u.user_name = ? and u.branch = ?", usersRowMapper, searchQuery, branch);
 	}
 

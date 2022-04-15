@@ -1,4 +1,4 @@
-<%@page import="sys.paymentbilling.dao.UserDao"%>
+<%@page import="sys.paymentbilling.dao.PayRegisterDao"%>
 <%@page import="sys.paymentbilling.model.User"%>
 <%@page import="org.apache.catalina.connector.Request"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Admin</title>
+<title>Accountant Form</title>
 </head>
 <body>
 <jsp:include page="/template/header.jsp"></jsp:include>
