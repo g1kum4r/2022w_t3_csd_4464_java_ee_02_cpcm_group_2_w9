@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import sys.paymentbilling.Constants;
-import sys.paymentbilling.dao.UserDao;
-import sys.paymentbilling.model.User;
+import sys.paymentbilling.dao.PayRegisterDao;
+import sys.paymentbilling.model.PayRegister;
 
 public class AdminAccountantServlet extends HttpServlet {
 	
-	private UserDao userDao;
+	private PayRegisterDao payRegisterDao;
 	
 	public AdminAccountantServlet() {
-		userDao = new UserDao();
+		payRegisterDao = new PayRegisterDao();
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class AdminAccountantServlet extends HttpServlet {
 				resp.sendRedirect(req.getContextPath().concat(String.format("/admin/create_accountant.jsp?id=%s", idString)));
 			} else if (action.equalsIgnoreCase(Constants.DELETE)) {
 				try {
-					userDao.deleteAccountant(Integer.parseInt(idString));
+					payRegisterDao.deleteAccountant(Integer.parseInt(idString));
 					resp.sendRedirect(req.getContextPath().concat("/admin/home.jsp"));
 				} catch (NumberFormatException | ClassNotFoundException | SQLException e) {
 					// TODO Auto-generated catch block
@@ -50,27 +50,27 @@ public class AdminAccountantServlet extends HttpServlet {
 		String dateOfBirth = req.getParameter(Constants.DATE_OF_BIRTH);
 		String salary = req.getParameter(Constants.SALARY);
 		
-		User user = new User();
-		user.setUsername(username);
-		user.setPassword(password);
-		user.setBranch(branch);
-		user.setDateOfJoining(dateOfJoining);
-		user.setDateOfBirth(dateOfBirth);
-		user.setSalary(salary);
+		PayRegister payRegister = new PayRegister();
+		payRegister.setUsername(username);
+		payRegister.setPassword(password);
+		payRegister.setBranch(branch);
+		payRegister.setDateOfJoining(dateOfJoining);
+		payRegister.setDateOfBirth(dateOfBirth);
+		payRegister.setSalary(salary);
 		
 		try {
 			if(id != null && !id.isEmpty()) {
-				this.userDao.updateAccountant(Integer.parseInt(id), user);
+				this.payRegisterDao.updateAccountant(Integer.parseInt(id), payRegister);
 				resp.sendRedirect(req.getContextPath()
 						.concat("/admin/create_accountant.jsp?id=")
-						.concat(String.valueOf(user.getId()))
-						.concat("&status=updated"));				
+						.concat(String.valueOf(payRegister.getId()))
+						.concat("&status=Updated"));				
 			} else {
-				this.userDao.createAccountant(user);
+				this.payRegisterDao.createAccountant(payRegister);
 				resp.sendRedirect(req.getContextPath()
 						.concat("/admin/create_accountant.jsp?id=")
-						.concat(String.valueOf(user.getId()))
-						.concat("&status=created"));
+						.concat(String.valueOf(payRegister.getId()))
+						.concat("&status=Created"));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

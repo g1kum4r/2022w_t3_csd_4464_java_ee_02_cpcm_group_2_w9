@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page="/template/head-styles.jsp"></jsp:include>
 <meta charset="ISO-8859-1">
 <title>Register</title>
 </head>

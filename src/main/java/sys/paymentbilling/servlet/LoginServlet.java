@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import sys.paymentbilling.Constants;
-import sys.paymentbilling.dao.UserDao;
+import sys.paymentbilling.dao.PayRegisterDao;
 import sys.paymentbilling.exception.IncorrectUsernameOrPassword;
-import sys.paymentbilling.model.User;
+import sys.paymentbilling.model.PayRegister;
 
 public class LoginServlet extends HttpServlet {
 	
-	UserDao userDao;
+	PayRegisterDao userDao;
 	
 	public LoginServlet() {
-		userDao = new UserDao();
+		userDao = new PayRegisterDao();
 	}
 		
 	@Override
@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 		String password = req.getParameter(Constants.PASSWORD);
 		try {
 			
-			User user = null;
+			PayRegister user = null;
 			
 			if(req.getParameter(Constants.ROLE) != null 
 					&& req.getParameter(Constants.ROLE).equalsIgnoreCase(Constants.ROLE_ADMIN)) {

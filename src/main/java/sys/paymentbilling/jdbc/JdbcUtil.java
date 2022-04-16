@@ -45,7 +45,7 @@ public class JdbcUtil {
 		return null;
 	}
 
-	public static int insert(String sql, Object... args) throws ClassNotFoundException, SQLException {
+	public static int insertOrUpdate(String sql, Object... args) throws ClassNotFoundException, SQLException {
 		PreparedStatement prepareStatement = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 		for (int i = 0; i < args.length; i++) {
 			prepareStatement.setObject(i + 1, args[i]);

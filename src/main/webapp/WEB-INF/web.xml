@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>PaymentBillingSystem</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-  </welcome-file-list>
-  
-  <servlet>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>PaymentBillingSystem</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+	</welcome-file-list>
+
+
+	<!-- <servlet>
 		<servlet-name>index_servlet</servlet-name>
 		<servlet-class>sys.paymentbilling.servlet.IndexServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>index_servlet</servlet-name>
 		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-	
-	
+	</servlet-mapping> -->
+
+
 	<servlet>
 		<servlet-name>login_servlet</servlet-name>
 		<servlet-class>sys.paymentbilling.servlet.LoginServlet</servlet-class>
@@ -47,4 +51,14 @@
 		<servlet-name>admin_accountant_servlet</servlet-name>
 		<url-pattern>/admin/accountant/*</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>accountant_student_servlet</servlet-name>
+		<servlet-class>sys.paymentbilling.servlet.AccountantStudentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>accountant_student_servlet</servlet-name>
+		<url-pattern>/accountant/student/*</url-pattern>
+	</servlet-mapping>
+
 </web-app>

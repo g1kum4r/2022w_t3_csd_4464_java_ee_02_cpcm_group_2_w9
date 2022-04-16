@@ -84,7 +84,7 @@ public class PayRegisterDao {
 
 	public void createAccountant(PayRegister user) throws ClassNotFoundException, SQLException {
 		user.setRole(Constants.ROLE_ACCOUNTANT);
-		int id = JdbcUtil.insert("insert into pay_register"
+		int id = JdbcUtil.insertOrUpdate("insert into pay_register"
 				+ "(user_name, user_pwd, role, branch, date_of_joining, date_of_birth, salary)"
 				+ "values (?, ?, ?, ?, ?, ?, ?)", 
 				user.getUsername(), user.getPassword(), user.getRole(), user.getBranch(), user.getDateOfJoining(), user.getDateOfBirth(), user.getSalary());
@@ -93,7 +93,7 @@ public class PayRegisterDao {
 	
 	public void updateAccountant(int id, PayRegister user) throws ClassNotFoundException, SQLException {
 		user.setRole(Constants.ROLE_ACCOUNTANT);
-		JdbcUtil.insert("update pay_register set user_pwd = ?, branch = ?, date_of_joining = ?, date_of_birth = ?, salary = ? "
+		JdbcUtil.insertOrUpdate("update pay_register set user_pwd = ?, branch = ?, date_of_joining = ?, date_of_birth = ?, salary = ? "
 				+ "where id = ? ", 
 				user.getPassword(), user.getBranch(), user.getDateOfJoining(), user.getDateOfBirth(), user.getSalary(), id);
 		user.setId(id);
